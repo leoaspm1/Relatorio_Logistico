@@ -4,6 +4,9 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Relatório da 4ª RPM</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
 <style>
   :root{
@@ -32,10 +35,13 @@
     --shadow-sm:0 1px 3px rgba(0,0,0,.25);
     --shadow-md:0 4px 12px rgba(0,0,0,.35);
     --shadow-lg:0 8px 24px rgba(0,0,0,.45);
+    --font-mono:'IBM Plex Mono','Consolas','Courier New',monospace;
   }
   *{box-sizing:border-box}
   [hidden]{display:none!important}
   html,body{margin:0;background:var(--paper);color:var(--ink);font:14px/1.5 var(--font-body);-webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale}
+  /* grid background pattern */
+  body>*{position:relative;z-index:1}
   button,select,input{font:inherit;color:inherit}
   button{cursor:pointer;transition:all .2s ease}
   :focus-visible{outline:2px solid var(--khaki);outline-offset:2px}
@@ -45,7 +51,7 @@
   .header-khaki{background:linear-gradient(180deg,#c8bb9a 0%,var(--khaki) 100%);display:flex;justify-content:center;align-items:flex-end;padding:28px 16px 32px;position:relative}
   .brasao-svg{width:auto;height:110px;filter:drop-shadow(0 4px 16px rgba(0,0,0,.5));border-radius:6px;object-fit:contain;transition:transform .3s ease}
   .brasao-svg:hover{transform:scale(1.03)}
-  header{background:linear-gradient(180deg,var(--khaki) 0%,#a89a76 100%);color:#2a2418;padding:18px 28px;display:flex;align-items:center;gap:24px;flex-wrap:wrap;border-bottom:3px solid rgba(26,23,16,.2);box-shadow:0 2px 8px rgba(0,0,0,.3)}
+  header{background:linear-gradient(180deg,rgba(200,187,154,.92) 0%,rgba(168,154,118,.95) 100%);color:#2a2418;padding:18px 28px;display:flex;align-items:center;gap:24px;flex-wrap:wrap;border-bottom:3px solid rgba(26,23,16,.2);box-shadow:0 2px 8px rgba(0,0,0,.3);position:sticky;top:0;z-index:100;backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px)}
   header h1{font:700 26px/1.1 var(--font-head);margin:0;letter-spacing:.03em;color:#1a1710;text-shadow:0 1px 0 rgba(200,187,154,.3)}
   header h1 small{display:block;font:600 13px/1.3 var(--font-body);color:#3a3220;margin-top:5px;letter-spacing:.01em}
   header .spacer{flex:1}
@@ -125,16 +131,17 @@
   .filters .clear:hover{opacity:1;color:var(--khaki)}
 
   /* ---------- resumo ---------- */
-  .summary{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:1px;background:var(--line);border:1px solid var(--card-border);border-radius:var(--radius-lg);margin-bottom:24px;overflow:hidden;box-shadow:var(--shadow-md)}
-  .summary div{padding:18px 22px;background:var(--card-bg);position:relative;transition:background .2s}
-  .summary div:hover{background:#242018}
-  .summary div::after{content:'';position:absolute;bottom:0;left:22px;right:22px;height:2px;background:linear-gradient(90deg,transparent,var(--khaki-dk),transparent);opacity:.15}
-  .summary div:last-child::after{display:none}
-  .summary .k{font:600 11px/1.2 var(--font-head);color:var(--khaki-dk);text-transform:uppercase;letter-spacing:.06em}
-  .summary .v{font:700 30px/1.1 var(--font-head);margin-top:8px;font-variant-numeric:tabular-nums;color:var(--khaki-lt);text-shadow:0 0 20px rgba(200,187,154,.1)}
-  .summary .v.red{color:var(--red);text-shadow:0 0 20px rgba(224,85,85,.15)}
-  .summary .v.amber{color:var(--amber);text-shadow:0 0 20px rgba(212,168,64,.15)}
-  .summary .s{font-size:11px;color:var(--ink-3);margin-top:5px}
+  .summary{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:12px;background:transparent;border:none;border-radius:0;margin-bottom:24px;overflow:visible;box-shadow:none}
+  .summary div{padding:16px 18px 18px;background:linear-gradient(145deg,#242018 0%,var(--card-bg) 100%);position:relative;transition:all .25s ease;border-radius:var(--radius-lg);border:1px solid #3a3428;box-shadow:var(--shadow-md);overflow:hidden;text-align:center}
+  .summary div:hover{transform:translateY(-2px);box-shadow:var(--shadow-lg);border-color:var(--khaki-dk)}
+  .summary div::before,.summary div::after{display:none}
+  .summary .k{font:700 11px/1.3 var(--font-head);color:var(--khaki);text-transform:uppercase;letter-spacing:.05em;background:none;border:none;border-radius:0;padding:0;box-shadow:none}
+  .summary .v{font:700 34px/1 var(--font-mono);margin-top:10px;font-variant-numeric:tabular-nums;color:var(--khaki-lt);text-shadow:0 0 24px rgba(200,187,154,.12);background:none;border:none;border-radius:0;padding:0;box-shadow:none}
+  .summary .v.red{color:var(--red);text-shadow:0 0 24px rgba(224,85,85,.15)}
+  .summary .v.amber{color:var(--amber);text-shadow:0 0 24px rgba(212,168,64,.15)}
+  .summary .v.green{color:var(--green);text-shadow:0 0 24px rgba(74,173,122,.15)}
+  .summary .s{font-size:11px;color:var(--ink-3);margin-top:6px;background:none;border:none;border-radius:0;padding:0;box-shadow:none}
+  .summary div div{background:none!important;border:none!important;border-radius:0!important;padding:0!important;box-shadow:none!important}
 
   /* ---------- gráfico por batalhão ---------- */
   .panel{background:var(--card-bg);border:1px solid var(--card-border);border-radius:var(--radius-lg);margin-bottom:24px;box-shadow:var(--shadow-md);overflow:hidden}
@@ -151,25 +158,32 @@
   .bar{display:flex;height:24px;background:#161310;border-radius:4px;overflow:hidden;box-shadow:inset 0 1px 3px rgba(0,0,0,.3)}
   .bar i{display:block;height:100%;position:relative}
   .bar i::after{content:'';position:absolute;inset:0;background:linear-gradient(180deg,rgba(255,255,255,.08) 0%,transparent 60%)}
-  .bar-row .tot{font-variant-numeric:tabular-nums;font-size:13px;text-align:right;color:var(--ink-2);font-weight:600}
+  .bar-row .tot{font-family:var(--font-mono);font-variant-numeric:tabular-nums;font-size:13px;text-align:right;color:var(--ink-2);font-weight:600}
   .legend{display:flex;gap:18px;flex-wrap:wrap;padding:10px 20px 16px;font-size:12px;color:var(--ink-2);border-top:1px solid var(--card-border)}
   .legend i{display:inline-block;width:12px;height:12px;border-radius:3px;vertical-align:-2px;margin-right:6px;box-shadow:0 1px 3px rgba(0,0,0,.3)}
 
   /* ---------- tabelas ---------- */
-  .tbl-wrap{overflow:auto;border-radius:var(--radius-lg);border:1px solid var(--card-border);box-shadow:var(--shadow-md);background:var(--card-bg)}
+  .tbl-wrap{overflow:auto;max-height:70vh;border-radius:var(--radius-lg);border:1px solid var(--card-border);box-shadow:var(--shadow-md);background:var(--card-bg)}
+  .tbl-wrap::-webkit-scrollbar{width:8px;height:8px}
+  .tbl-wrap::-webkit-scrollbar-track{background:rgba(22,19,16,.6);border-radius:4px}
+  .tbl-wrap::-webkit-scrollbar-thumb{background:linear-gradient(180deg,var(--khaki-dk),#5a5040);border-radius:4px;border:1px solid rgba(0,0,0,.3)}
+  .tbl-wrap::-webkit-scrollbar-thumb:hover{background:linear-gradient(180deg,var(--khaki),#6a6050)}
+  .tbl-wrap::-webkit-scrollbar-corner{background:rgba(22,19,16,.6)}
+  .tbl-wrap{scrollbar-width:thin;scrollbar-color:#5a5040 rgba(22,19,16,.6)}
   table{width:100%;border-collapse:collapse;font-size:13px}
-  th,td{padding:10px 14px;border-bottom:1px solid rgba(46,42,34,.6);text-align:left;vertical-align:top}
-  th{font:600 11px/1.2 var(--font-head);color:var(--khaki);background:linear-gradient(180deg,#242018 0%,#1e1b14 100%);position:sticky;top:0;white-space:nowrap;cursor:pointer;user-select:none;text-transform:uppercase;letter-spacing:.05em;border-bottom:2px solid var(--card-border)}
+  th,td{padding:12px 16px;border:none;text-align:left;vertical-align:middle}
+  th{font:600 11px/1.2 var(--font-head);color:var(--khaki);background:#1a1710;position:sticky;top:0;white-space:nowrap;cursor:pointer;user-select:none;text-transform:uppercase;letter-spacing:.06em;border-bottom:2px solid rgba(181,166,130,.15)}
   tfoot th{position:static;cursor:default;border-top:2px solid var(--khaki-dk);color:var(--ink);background:var(--card-bg)}
   th.sort-asc::after{content:" ▲";font-size:9px;color:var(--khaki-lt)}
   th.sort-desc::after{content:" ▼";font-size:9px;color:var(--khaki-lt)}
-  td.num,th.num{text-align:right;font-variant-numeric:tabular-nums;white-space:nowrap}
+  td.num,th.num{text-align:right;font-variant-numeric:tabular-nums;white-space:nowrap;font-family:var(--font-mono)}
   tbody tr{transition:background .15s}
-  tbody tr:nth-child(even){background:rgba(34,31,24,.4)}
+  tbody tr:nth-child(even){background:rgba(40,36,26,.5)}
   tbody tr:nth-child(odd){background:transparent}
+  tbody tr:hover{background:rgba(181,166,130,.08)}
   tr.click{cursor:pointer}
   tr.click:hover td{background:rgba(163,151,117,.1)}
-  td.mono{font-family:Consolas,"Courier New",monospace;font-size:12px;white-space:nowrap}
+  td.mono{font-family:var(--font-mono);font-size:12px;white-space:nowrap}
   .tag{display:inline-block;padding:4px 10px;border-radius:20px;font-size:11px;font-weight:600;white-space:nowrap;letter-spacing:.03em;box-shadow:0 1px 2px rgba(0,0,0,.2)}
   .tag.uso{background:linear-gradient(135deg,#2e2818,#3a3220);color:var(--khaki-lt);border:1px solid #4a4230}
   .tag.estoq{background:linear-gradient(135deg,#22201a,#2a2820);color:var(--khaki);border:1px solid #3a3828}
@@ -200,7 +214,7 @@
   .distrib-card::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;background:linear-gradient(90deg,var(--khaki-dk),var(--khaki),var(--khaki-dk));opacity:.6}
   .distrib-card:hover{transform:translateY(-3px);box-shadow:var(--shadow-lg);border-color:var(--khaki-dk)}
   .distrib-card .dc-title{font:700 11px/1.3 var(--font-head);color:var(--khaki);text-transform:uppercase;letter-spacing:.05em;margin-bottom:10px}
-  .distrib-card .dc-value{font:700 44px/1 var(--font-head);color:var(--khaki-lt);font-variant-numeric:tabular-nums;text-shadow:0 0 24px rgba(200,187,154,.12)}
+  .distrib-card .dc-value{font:700 44px/1 var(--font-mono);color:var(--khaki-lt);font-variant-numeric:tabular-nums;text-shadow:0 0 24px rgba(200,187,154,.12)}
   @media (max-width:1100px){.distrib-grid{grid-template-columns:repeat(3,1fr)}}
   @media (max-width:740px){.distrib-grid{grid-template-columns:repeat(2,1fr)}}
   @media (max-width:480px){.distrib-grid{grid-template-columns:1fr}}
@@ -225,6 +239,47 @@
     th{background:#f3f5f8;color:#4A5A78}
     .tag.uso{background:#E5EAF3;color:#1B2A4A}.tag.estoq{background:#E8EEF7;color:#3E5A8A}.tag.pend{background:#FBE9EB;color:#B3202E}.tag.trans{background:#FBF1DE;color:#8A5E0D}.tag.other{background:#ECECEC;color:#555}
     .panel,.summary{break-inside:avoid}
+  }
+
+  /* ---------- pulsing status dot (data freshness) ---------- */
+  .status-dot{display:inline-flex;align-items:center;gap:8px;font-size:12px;color:var(--ink-2)}
+  .status-dot::before{content:'';width:7px;height:7px;border-radius:50%;background:var(--green);box-shadow:0 0 8px var(--green);animation:pulse-dot 2s infinite;flex-shrink:0}
+  @keyframes pulse-dot{0%,100%{opacity:1;box-shadow:0 0 8px var(--green)}50%{opacity:.5;box-shadow:0 0 4px var(--green)}}
+
+  /* ---------- section label with extending line ---------- */
+  .section-label{display:flex;align-items:center;gap:12px;font:700 13px/1 var(--font-head);color:var(--khaki);text-transform:uppercase;letter-spacing:.06em;margin:28px 0 16px;padding:0}
+  .section-label::after{content:'';flex:1;height:1px;background:linear-gradient(90deg,var(--card-border),transparent)}
+
+  /* ---------- alert rows with colored dots ---------- */
+  .alert-row{display:flex;align-items:flex-start;padding:10px 14px;border-radius:6px;margin-bottom:6px;font-size:12px;gap:10px;border:1px solid;line-height:1.5}
+  .alert-row.a-red{background:rgba(224,85,85,.06);border-color:rgba(224,85,85,.15)}
+  .alert-row.a-amber{background:rgba(212,168,64,.06);border-color:rgba(212,168,64,.15)}
+  .alert-row.a-green{background:rgba(74,173,122,.06);border-color:rgba(74,173,122,.15)}
+  .alert-dot{width:6px;height:6px;border-radius:50%;flex-shrink:0;margin-top:5px}
+  .alert-dot.d-red{background:var(--red);box-shadow:0 0 6px var(--red)}
+  .alert-dot.d-amber{background:var(--amber);box-shadow:0 0 6px var(--amber)}
+  .alert-dot.d-green{background:var(--green);box-shadow:0 0 6px var(--green)}
+
+  /* ---------- thin progress bars ---------- */
+  .progress-bar{height:5px;background:rgba(255,255,255,.05);border-radius:99px;overflow:hidden;margin-top:6px}
+  .progress-fill{height:100%;border-radius:99px;transition:width .4s ease}
+  .progress-fill.pf-green{background:linear-gradient(90deg,#3a8a5a,var(--green))}
+  .progress-fill.pf-amber{background:linear-gradient(90deg,#b89030,var(--amber))}
+  .progress-fill.pf-red{background:linear-gradient(90deg,#a03030,var(--red))}
+  .progress-fill.pf-khaki{background:linear-gradient(90deg,var(--khaki-dk),var(--khaki))}
+
+  /* ---------- sub-grid status mini-cards ---------- */
+  .sub-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:8px}
+  .sub-item{background:rgba(255,255,255,.03);border:1px solid var(--card-border);border-radius:6px;padding:10px 12px}
+  .sub-item .si-label{font:600 10px/1.2 var(--font-head);color:var(--khaki-dk);text-transform:uppercase;letter-spacing:.05em}
+  .sub-item .si-value{font:700 20px/1.2 var(--font-mono);color:var(--khaki-lt);margin-top:4px;font-variant-numeric:tabular-nums}
+  .sub-item .si-value.si-red{color:var(--red)}
+  .sub-item .si-value.si-amber{color:var(--amber)}
+  .sub-item .si-value.si-green{color:var(--green)}
+
+  @media print{
+    body::before{display:none}
+    .status-dot::before{display:none}
   }
 </style>
 </head>
@@ -715,7 +770,7 @@ function render(){
   $('tabs').hidden=!any;
   $('btnPrint').hidden=!any;
   const fonte = S.fonte==='servidor'?'lidos da pasta dados/' : S.fonte==='embutido'?`embutidos${S.geradoEm?' em '+S.geradoEm:''}` : '';
-  $('ref').innerHTML = (S.mapa&&S.mapa.ref ? `Posição do mapa carga em <b>${S.mapa.ref.toLocaleDateString('pt-BR')}</b>` : '') + (fonte?` <span style="opacity:.75">· dados ${fonte}</span>`:'');
+  $('ref').innerHTML = (S.mapa&&S.mapa.ref ? `<span class="status-dot" style="color:#5a5040">Posição do mapa carga em <b>${S.mapa.ref.toLocaleDateString('pt-BR')}</b></span>` : '') + (fonte?` <span style="opacity:.75">· dados ${fonte}</span>`:'');
   if(!any){ if(document.getElementById('dados-cifrados')&&!S.loaded.length) return; main.innerHTML=emptyState(); bindDrop(); return; }
 
   $('nMapa').textContent = S.mapa? n(S.mapa.rows.length):'–';
@@ -788,6 +843,7 @@ function renderMapa(){
 
   if(!S.drill){
     html+=`
+    <div class="section-label">Visão geral</div>
     <div class="panel">
       <div class="panel-h"><h2>Situação do acervo por batalhão</h2><span class="hint">clique para filtrar</span></div>
       <div class="bars">
@@ -821,6 +877,7 @@ function renderMapa(){
   const slice=sorted.slice((S.page-1)*S.per,S.page*S.per);
   const showItems = S.drill || f.unid || f.q || f.dest || f.mun;
   html+=`
+  <div class="section-label">Detalhamento</div>
   <div class="panel">
     <div class="panel-h">
       ${S.drill? `<div class="breadcrumb" style="margin:0"><a id="back">Unidades</a> › <b>${esc(S.drill)}</b></div>` : `<h2>Itens</h2>`}
@@ -861,6 +918,9 @@ function renderGuias(){
     <div><div class="k">Batalhões envolvidos</div><div class="v">${n(bats.length)}</div></div>
   </div>
 
+  ${rows.length>0?`<div class="alert-row a-red"><span class="alert-dot d-red"></span><span><b>${n(rows.length)}</b> guia(s) aguardando confirmação de recebimento. Regularize junto às unidades de destino.</span></div>`:''}
+
+  <div class="section-label">Análise por unidade</div>
   <div class="grid-2">
     <div class="panel">
       <div class="panel-h"><h2>Pendências por unidade de destino</h2></div>
@@ -881,6 +941,7 @@ function renderGuias(){
     </div>
   </div>
 
+  <div class="section-label">Detalhamento</div>
   <div class="panel">
     <div class="panel-h"><h2>Relação das guias</h2><span class="right">${n(rows.length)} itens &nbsp; <a style="cursor:pointer;text-decoration:underline" id="csv">Exportar CSV</a></span></div>
     <div class="tbl-wrap"><table>
@@ -922,12 +983,13 @@ function renderQDL(){
       const exist=mapaRows.filter(r=>re.test(r.mat)).length;
       return {nome,prev,exist,dif:exist-prev};
     });
-    cross=`<div class="panel">
+    cross=`<div class="section-label">Cruzamento QDL × Mapa Carga</div>
+    <div class="panel">
       <div class="panel-h"><h2>Previsto no QDL × existente no mapa carga</h2><span class="hint">${q.bat? esc(q.bat):'toda a 4ª RPM'} · contagem por descrição do material, aproximada</span></div>
       <div class="tbl-wrap"><table>
         <thead><tr><th>Material</th><th class="num">Previsto (QDL)</th><th class="num">Existente (mapa carga)</th><th class="num">Diferença</th><th>Cobertura</th></tr></thead>
         <tbody>${lines.map(l=>`<tr><td>${l.nome}</td><td class="num">${n(l.prev)}</td><td class="num">${n(l.exist)}</td><td class="num" style="${l.dif<0?'color:var(--red);font-weight:600':l.dif>0?'color:var(--green)':''}">${l.dif>0?'+':''}${n(l.dif)}</td>
-          <td><div class="bar" style="max-width:220px"><i style="width:${l.prev?Math.min(100,l.exist/l.prev*100):0}%;background:${l.dif<0?'var(--red)':'var(--ink)'}"></i></div></td></tr>`).join('')}</tbody>
+          <td><div class="progress-bar" style="max-width:220px"><div class="progress-fill ${l.dif<0?'pf-red':'pf-khaki'}" style="width:${l.prev?Math.min(100,l.exist/l.prev*100):0}%"></div></div></td></tr>`).join('')}</tbody>
       </table></div>
       <div class="legend"><span>O mapa carga não separa rádio móvel de HT nem identifica coletes; viaturas locadas (terceiros) contam como existentes. Use como indicativo, não como conferência oficial.</span></div>
     </div>`;
@@ -950,7 +1012,8 @@ function renderQDL(){
     <div><div class="k">Computadores</div><div class="v">${n(sum('Computador previsto'))}</div><div class="s">notebooks: ${n(sum('Notebook previsto'))}</div></div>
   </div>
 
-  ${q.bat?'':`<div class="panel">
+  ${q.bat?'':`<div class="section-label">Visão por batalhão</div>
+  <div class="panel">
     <div class="panel-h"><h2>Dotação prevista por batalhão</h2><span class="hint">clique para filtrar</span></div>
     <div class="tbl-wrap"><table>
       <thead><tr><th>Batalhão</th><th class="num">Municípios</th><th class="num">Efetivo</th><th class="num">Arma de porte</th><th class="num">Alta energia</th><th class="num">Viaturas</th><th class="num">Motos</th><th class="num">Rádio móvel</th><th class="num">HT</th><th class="num">Computador</th></tr></thead>
@@ -960,6 +1023,7 @@ function renderQDL(){
 
   ${cross}
 
+  <div class="section-label">Detalhamento por município</div>
   <div class="panel">
     <div class="panel-h"><h2>${grp.name} — previsão por município</h2><span class="right">${n(rows.length)} linhas &nbsp; <a style="cursor:pointer;text-decoration:underline" id="csv">Exportar CSV</a></span></div>
     <div class="tbl-wrap"><table>
@@ -1020,14 +1084,17 @@ function renderDistrib(){
 
   <div class="distrib-header">
     <h2>Quadro de Distribuição</h2>
-    <span>${esc(scope)} · ${n(total)} itens classificados</span>
+    <span class="status-dot">${esc(scope)} · ${n(total)} itens classificados</span>
   </div>
 
+  <div class="section-label">Distribuição por categoria</div>
   <div class="distrib-grid">
-    ${counts.map(c=>`<div class="distrib-card">
+    ${counts.map(c=>{const pctV=total?Math.round(c.qtd/total*100):0;return `<div class="distrib-card">
       <div class="dc-title">${esc(c.nome)}</div>
       <div class="dc-value">${n(c.qtd)}</div>
-    </div>`).join('')}
+      <div class="progress-bar" style="margin-top:10px"><div class="progress-fill pf-khaki" style="width:${pctV}%"></div></div>
+      <div style="font-size:11px;color:var(--ink-3);margin-top:4px">${pctV}% do total</div>
+    </div>`;}).join('')}
   </div>`;
 }
 
@@ -1067,6 +1134,12 @@ function renderInventario(){
     <div><div class="k">Qtde Convênio</div><div class="v">${n(totalConv)}</div></div>
   </div>
 
+  <div class="sub-grid" style="margin-bottom:20px">
+    <div class="sub-item"><div class="si-label">Taxa de reserva</div><div class="si-value ${totalEst&&totalRes/totalEst>.5?'si-amber':'si-green'}">${totalEst?Math.round(totalRes/totalEst*100):0}%</div><div class="progress-bar"><div class="progress-fill ${totalEst&&totalRes/totalEst>.5?'pf-amber':'pf-green'}" style="width:${totalEst?Math.min(100,totalRes/totalEst*100):0}%"></div></div></div>
+    <div class="sub-item"><div class="si-label">Disponibilidade</div><div class="si-value si-green">${totalEst?Math.round(totalDisp/totalEst*100):0}%</div><div class="progress-bar"><div class="progress-fill pf-green" style="width:${totalEst?Math.min(100,totalDisp/totalEst*100):0}%"></div></div></div>
+  </div>
+
+  <div class="section-label">Relação de itens</div>
   <div class="tw">
   <table>
     <thead><tr>
@@ -1122,6 +1195,11 @@ function renderDrones(){
     <div><div class="k">Voos registrados</div><div class="v">${n(rows.reduce((a,r)=>a+r.voos,0))}</div></div>
   </div>
 
+  ${vencidos?`<div class="alert-row a-red"><span class="alert-dot d-red"></span><span><b>${n(vencidos)}</b> aeronave(s) com SISANT vencido. Providenciar renovação junto à ANAC.</span></div>`:''}
+  ${vencendo?`<div class="alert-row a-amber"><span class="alert-dot d-amber"></span><span><b>${n(vencendo)}</b> aeronave(s) com SISANT vencendo nos próximos 60 dias.</span></div>`:''}
+  ${incompletos?`<div class="alert-row a-amber"><span class="alert-dot d-amber"></span><span><b>${n(incompletos)}</b> aeronave(s) com cadastro incompleto (sem patrimônio, modelo ou validade).</span></div>`:''}
+
+  <div class="section-label">Frota completa</div>
   <div class="panel">
     <div class="panel-h"><h2>Frota de aeronaves remotamente pilotadas</h2><span class="hint">hoje: ${today.toLocaleDateString('pt-BR')}</span><span class="right"><a style="cursor:pointer;text-decoration:underline" id="csv">Exportar CSV</a></span></div>
     <div class="tbl-wrap"><table>
