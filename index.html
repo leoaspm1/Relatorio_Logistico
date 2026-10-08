@@ -351,7 +351,7 @@
   <div class="ref" id="ref"></div>
   <button class="btn" id="btnLoad">Carregar planilhas</button>
   <input type="file" id="fileInput" accept=".xlsx,.xls" multiple hidden>
-  <button class="btn" id="btnContraste" onclick="toggleTheme()" title="Alternar tema claro/escuro">☀ Contraste</button>
+  <button class="btn" id="btnContraste" onclick="toggleTheme()" title="Alternar tema claro/escuro">☀</button>
 </header>
 
 <nav class="tabs" id="tabs" hidden>
@@ -823,10 +823,10 @@ function toggleTheme(){
   document.body.classList.toggle('light');
   const btn=$('btnContraste');
   if(document.body.classList.contains('light')){
-    btn.textContent='🌙 Contraste';
+    btn.textContent='🌙';
     localStorage.setItem('tema-4rpm','light');
   }else{
-    btn.textContent='☀ Contraste';
+    btn.textContent='☀';
     localStorage.setItem('tema-4rpm','dark');
   }
 }
@@ -835,7 +835,7 @@ try{
     document.body.classList.add('light');
     document.addEventListener('DOMContentLoaded',()=>{
       const btn=$('btnContraste');
-      if(btn) btn.textContent='🌙 Contraste';
+      if(btn) btn.textContent='🌙';
     });
   }
 }catch(e){}
