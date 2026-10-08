@@ -277,6 +277,61 @@
   .sub-item .si-value.si-amber{color:var(--amber)}
   .sub-item .si-value.si-green{color:var(--green)}
 
+  /* ---------- tema claro ---------- */
+  body.light{
+    --ink:#2a2418;--ink-2:#5a5040;--ink-3:#7a7058;
+    --line:#d8d0c0;--paper:#f0ece4;--white:#fff;
+    --card-bg:#fff;--card-border:#d0c8b8;
+    --shadow-sm:0 1px 3px rgba(0,0,0,.08);
+    --shadow-md:0 4px 12px rgba(0,0,0,.1);
+    --shadow-lg:0 8px 24px rgba(0,0,0,.12);
+    --red:#c03030;--amber:#b08020;--green:#2a8a50;
+    --khaki:#8a7e60;--khaki-lt:#6a6050;--khaki-dk:#a09480;
+    --glow-khaki:rgba(140,130,100,.08);
+  }
+  body.light header{background:linear-gradient(180deg,rgba(220,210,190,.95) 0%,rgba(200,190,170,.98) 100%);color:#2a2418;box-shadow:0 2px 8px rgba(0,0,0,.1)}
+  body.light nav.tabs{background:linear-gradient(180deg,#e8e0d0 0%,#ddd6c8 100%);border-bottom-color:#c0b8a0}
+  body.light nav.tabs button{color:#8a7e60}
+  body.light nav.tabs button.active{color:#2a2418;border-bottom-color:#8a7e60;background:rgba(140,130,100,.08)}
+  body.light th{background:#f5f0e8;color:#5a5040;border-bottom-color:#d0c8b8}
+  body.light tbody tr:nth-child(even){background:rgba(220,210,190,.3)}
+  body.light tbody tr:hover{background:rgba(140,130,100,.1)}
+  body.light .summary div{background:linear-gradient(145deg,#fff 0%,#f8f4ec 100%);border-color:#d0c8b8}
+  body.light .summary div:hover{border-color:#b0a890;box-shadow:var(--shadow-lg)}
+  body.light .summary .v{color:#2a2418;text-shadow:none}
+  body.light .summary .v.red{color:var(--red)}
+  body.light .summary .v.amber{color:var(--amber)}
+  body.light .distrib-card{background:linear-gradient(145deg,#fff 0%,#f8f4ec 100%);border-color:#d0c8b8}
+  body.light .distrib-card:hover{border-color:#b0a890}
+  body.light .distrib-card .dc-value{color:#2a2418;text-shadow:none}
+  body.light .panel{background:#fff;border-color:#d0c8b8}
+  body.light .panel-h{background:linear-gradient(180deg,#f5f0e8 0%,#fff 100%);border-bottom-color:#d0c8b8}
+  body.light .tbl-wrap{background:#fff;border-color:#d0c8b8}
+  body.light .filters{background:#fff;border-color:#d0c8b8}
+  body.light select,body.light input[type=search]{background:#f8f4ec;border-color:#d0c8b8;color:#2a2418}
+  body.light select option{background:#f8f4ec;color:#2a2418}
+  body.light .filters select,.light .filters input{background:#f8f4ec;border-color:#d0c8b8;color:#2a2418;box-shadow:inset 0 1px 2px rgba(0,0,0,.06)}
+  body.light .filters select:hover,.light .filters input:hover{border-color:#b0a890}
+  body.light .filters select:focus,.light .filters input:focus{border-color:#8a7e60;box-shadow:0 0 0 3px rgba(140,130,100,.12),inset 0 1px 2px rgba(0,0,0,.06)}
+  body.light .bar{background:#e8e0d0}
+  body.light .btn{background:linear-gradient(180deg,#f0ece4,#e0d8c8);border-color:#c0b8a0;color:#2a2418}
+  body.light .btn:hover{background:linear-gradient(180deg,#e8e0d0,#d8d0c0)}
+  body.light .btn.primary{background:linear-gradient(180deg,#8a7e60,#6a6050);color:#fff}
+  body.light .alert-row.a-red{background:rgba(192,48,48,.08);border-color:rgba(192,48,48,.2)}
+  body.light .alert-row.a-amber{background:rgba(176,128,32,.08);border-color:rgba(176,128,32,.2)}
+  body.light .alert-row.a-green{background:rgba(42,138,80,.08);border-color:rgba(42,138,80,.2)}
+  body.light .sub-item{background:rgba(0,0,0,.03);border-color:#d0c8b8}
+  body.light .tbl-wrap::-webkit-scrollbar-track{background:rgba(220,210,190,.5)}
+  body.light .tbl-wrap::-webkit-scrollbar-thumb{background:linear-gradient(180deg,#b0a890,#9a8e70);border-color:rgba(0,0,0,.1)}
+  body.light .tbl-wrap{scrollbar-color:#a09480 rgba(220,210,190,.5)}
+  body.light .section-label{color:#8a7e60}
+  body.light .section-label::after{background:linear-gradient(90deg,#d0c8b8,transparent)}
+  body.light .header-khaki{background:linear-gradient(180deg,#e8e0d0,#ddd6c8);border-bottom-color:#c0b8a0}
+  body.light .tag{box-shadow:0 1px 2px rgba(0,0,0,.1)}
+  body.light #btnContraste{background:linear-gradient(180deg,#3a3428,#2a2418);color:#e8e4dc;border-color:#5a5040}
+  body.light .progress-bar{background:rgba(0,0,0,.08)}
+  body.light ::selection{background:rgba(140,130,100,.3);color:#000}
+
   @media print{
     body::before{display:none}
     .status-dot::before{display:none}
@@ -295,6 +350,7 @@
   <div class="spacer"></div>
   <div class="ref" id="ref"></div>
   <button class="btn" id="btnPrint" hidden onclick="window.print()">Imprimir</button>
+  <button class="btn" id="btnContraste" onclick="toggleTheme()" title="Alternar tema claro/escuro">☀ Contraste</button>
   <button class="btn primary" id="btnLoad">Carregar planilhas</button>
   <input type="file" id="fileInput" accept=".xlsx,.xls" multiple hidden>
 </header>
@@ -763,6 +819,28 @@ const batSort=(a,b)=>{const i=BAT_ORDER.indexOf(a),j=BAT_ORDER.indexOf(b);return
    Render
    ============================================================ */
 const $=id=>document.getElementById(id);
+
+/* Tema claro/escuro */
+function toggleTheme(){
+  document.body.classList.toggle('light');
+  const btn=$('btnContraste');
+  if(document.body.classList.contains('light')){
+    btn.textContent='🌙 Contraste';
+    localStorage.setItem('tema-4rpm','light');
+  }else{
+    btn.textContent='☀ Contraste';
+    localStorage.setItem('tema-4rpm','dark');
+  }
+}
+try{
+  if(localStorage.getItem('tema-4rpm')==='light'){
+    document.body.classList.add('light');
+    document.addEventListener('DOMContentLoaded',()=>{
+      const btn=$('btnContraste');
+      if(btn) btn.textContent='🌙 Contraste';
+    });
+  }
+}catch(e){}
 
 function render(){
   const main=$('main');
